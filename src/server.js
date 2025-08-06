@@ -7,7 +7,7 @@ import { getAllContactsController } from './controllers/contacts.controller.js';
 import { getContactIdController } from './controllers/contact.controller.js';
 
 dotenv.config();
-const PORT = Number(process.env.PORT)|| 4000;
+const PORT = Number(process.env.PORT);
 
 export const setupServer = async () => {
 

@@ -51,20 +51,6 @@ export const updateContactContr = async (req, res, next) => {
   });
 };
 
-export const upsertContactContr = async (req, res, next) => {
-  const { contactId } = req.params;
-  const result = await updateContact(contactId, req.body, { upsert: true });
-  if (!result) {
-    next(createError(404, `Contact not found`));
-    return;
-  }
-  const status = result.isNew ? 201 : 200;
-  res.status(status).json({
-    status,
-    message: `Successfully upserted a contact!`,
-    data: result.contact,
-  });
-};
 
 export const deleteContactContr = async (req, res, next) => {
   const deleted = await deleteContact(req.params.contactId);

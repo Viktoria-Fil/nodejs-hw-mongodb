@@ -23,29 +23,24 @@ export const setupServer = async () => {
       },
     }),
   );
-    
-  app.use(cors());
-
-  app.use(contactsRouter);
-
-  app.use(notFoundHandler);
-
-  app.use(errorHandler);
   
   app.get('/', (req, res) => {
     res.send('Hello World!');
   });
     
-    
-  app.use((req, res) => {
-    res.status(404).json({
-      message: 'Not found',
-    });
-  });
+  app.use(contactsRouter);
+
+  app.use(notFoundHandler);
+  
+  app.use(errorHandler);
+
+
   const PORT = Number(env('PORT', 3000));
 
   app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
   });
+
+
 };
 setupServer();

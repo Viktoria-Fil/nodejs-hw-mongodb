@@ -3,7 +3,7 @@ import cors from 'cors';
 import pino from 'pino-http';
 import dotenv from 'dotenv';
 
-import router from './routers/contacts';
+import contactsRouter from './routers/contacts';
 import { errorHandler } from './middlewares/errorHandler';
 import { notFoundHandler } from './middlewares/notFoundHandler';
 
@@ -25,7 +25,7 @@ export const setupServer = async () => {
     
   app.use(cors());
 
-  app.use(router);
+  app.use(contactsRouter);
 
   app.use(notFoundHandler);
 

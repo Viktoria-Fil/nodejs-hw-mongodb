@@ -17,3 +17,4 @@ router.patch('/contacts/:contactId', cWrap(updateContactContr));
 router.delete('/contacts/:contactId', cWrap(deleteContactContr));
 
 export default router;
+

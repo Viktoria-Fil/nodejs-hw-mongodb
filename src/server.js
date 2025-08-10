@@ -1,17 +1,15 @@
 import express from 'express';
 import cors from 'cors';
 import pino from 'pino-http';
-import dotenv from 'dotenv';
 
 import { env } from './utils/env.js';
 import contactsRouter from './routers/contacts.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 
-dotenv.config();
 
 
-export const setupServer = async () => {
+export function setupServer () {
 
   const app = express();
   app.use(express.json());
@@ -41,6 +39,5 @@ export const setupServer = async () => {
     console.log(`Server is running on port ${PORT}`);
   });
 
-
 };
-setupServer();
+

@@ -51,18 +51,14 @@ export const updateContactContr = async (req, res, next) => {
   });
 };
 
-
-export const deleteContactContr = async (req, res, next) => {
-  try {
-    const deleted = await deleteContact(req.params.contactId);
-    if (!deleted) {
-      next(createError(404, "Contact not found"));
-      return;
-    }
-    res.status(204).send();
-  } catch (err) {
-    next(err);
+export const deleteContactController = async (req, res, next) => {
+  const { contactId } = req.params;
+  const contact = await deleteContact(contactId);
+  if (!contact) {
+    next(createError(404, `Contact with id ${contactId} was not found`));
+    return;
   }
+  res.status(204).send();
 };
 
 

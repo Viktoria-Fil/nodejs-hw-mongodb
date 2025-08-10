@@ -30,11 +30,11 @@ export const getContactByIdContr = async (req, res, next) => {
 
 export const createContactContr = async (req, res) => {
   const contact = await createContact(req.body);
-    res.status(201).json({
-        status: 201,
-        message: "Successfully created a contact!",
-        data: contact
-    });
+  res.status(201).json({
+    status: 201,
+    message: 'Successfully created contact!',
+    data: contact,
+  });
 };
 
 export const updateContactContr = async (req, res, next) => {
@@ -53,9 +53,16 @@ export const updateContactContr = async (req, res, next) => {
 
 
 export const deleteContactContr = async (req, res, next) => {
-  const deleted = await deleteContact(req.params.contactId);
-  if (!deleted) throw createError(404, "Contact not found");
-  res.status(204).send();
+  try {
+    const deleted = await deleteContact(req.params.contactId);
+    if (!deleted) {
+      next(createError(404, "Contact not found"));
+      return;
+    }
+    res.status(204).send();
+  } catch (err) {
+    next(err);
+  }
 };
 
 

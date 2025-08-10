@@ -9,7 +9,7 @@ export const getAllContacts = async () => {
   }
 };
 
-export const getContactsById = async (contactId) => {
+export const getContactById = async (contactId) => {
   try {
     const contact = await ContactsCollection.findById(contactId);
     return contact;

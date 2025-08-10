@@ -17,4 +17,3 @@ export const initMongoConnection = async () => {
     throw error;
   }
 };
-console.log('Mongo URI:', process.env.MONGO_URL); 

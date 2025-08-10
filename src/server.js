@@ -3,8 +3,9 @@ import cors from 'cors';
 import pino from 'pino-http';
 import dotenv from 'dotenv';
 
-import { getAllContactsController } from './controllers/contacts.controller.js';
-import { getContactIdController } from './controllers/contact.controller.js';
+import router from './routers/contacts';
+import { errorHandler } from './middlewares/errorHandler';
+import { notFoundHandler } from './middlewares/notFoundHandler';
 
 dotenv.config();
 const PORT = Number(process.env.PORT);
@@ -22,12 +23,18 @@ export const setupServer = async () => {
     }),
     );
     
+  app.use(cors());
+
+  app.use(router);
+
+  app.use(notFoundHandler);
+
+  app.use(errorHandler);
+  
     app.get('/', (req, res) => {
     res.send('Hello World!');
     });
-    app.get('/contacts', getAllContactsController);
     
-    app.get('/contacts/:contactId', getContactIdController);
     
     app.use((req, res) => {
         res.status(404).json({

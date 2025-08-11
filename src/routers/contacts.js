@@ -13,12 +13,12 @@ import {
 } from '../controllers/contacts.js';
 
 
-contactRoutes.get('/', cWrap(getAllContactsConroller));
-contactRoutes.post('/', jsonParser, cWrap(postContactController));
-contactRoutes.get('/:contactId', cWrap(getContactByIdController));
-contactRoutes.delete('/:contactId', cWrap(deleteContactController));
+contactRoutes.get('/contacts', cWrap(getAllContactsConroller));
+contactRoutes.post('/contacts', jsonParser, cWrap(postContactController));
+contactRoutes.get('/contacts/:contactId', cWrap(getContactByIdController));
+contactRoutes.delete('/contacts/:contactId', cWrap(deleteContactController));
 contactRoutes.patch(
-  '/:contactId',  jsonParser, cWrap(updateContactController),);
+  '/contacts/:contactId',  jsonParser, cWrap(updateContactController),);
 
 export default contactRoutes;
 

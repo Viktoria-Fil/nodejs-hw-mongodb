@@ -22,7 +22,7 @@ async function initMongoConnection() {
 
 export { initMongoConnection };
   
-console.log('Mongo URI:', process.env.MONGO_URL); 
+console.log('Mongo URI:', env('MONGODB_URL')); 
  
 //   const cluster = env('MONGODB_CLUSTER_NAME');
 

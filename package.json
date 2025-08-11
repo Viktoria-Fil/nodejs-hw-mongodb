@@ -2,12 +2,11 @@
   "name": "nodejs-hw-mongodb",
   "version": "1.0.0",
   "type": "module",
-  "main": "src/index.js",
+  "main": "index.js",
   "scripts": {
     "lint": "eslint src/**/*.js",
-    "start": "node ./src/index.js",
-    "dev": "nodemon src/index.js",
-     "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
   },
   "keywords": [],
   "author": "Vktoria Fil",

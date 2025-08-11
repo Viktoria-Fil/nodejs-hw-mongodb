@@ -12,7 +12,7 @@ export async function getAllContactsConroller(req, res) {
   if (contacts === null) {
     throw new createHttpError.NotFound('Contact not found.');
   }
-  res.json({
+  res.status(200).json({
     status: 200,
     message: 'Successfully found contacts!',
     data: contacts,

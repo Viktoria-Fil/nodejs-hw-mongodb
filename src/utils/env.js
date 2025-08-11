@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+dotenv.config({ path: '.env.local' });
 dotenv.config();
 
 function env(name, defaultValue) {

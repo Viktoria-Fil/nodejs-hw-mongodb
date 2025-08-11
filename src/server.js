@@ -1,16 +1,17 @@
+import dotenv from 'dotenv';
+dotenv.config();
 import express from 'express';
-import 'dotenv/config';
 
 import { env } from './utils/env.js';
 import contactRoutes from './routers/contacts.js';
 import { loggerMiddleware } from './middlewares/contactMiddlewares.js';
-import { corsMiddleware } from './middlewares/corsMidleware.js';
+import { corsMiddleware } from './middlewares/corsMiddlewares.js';
 import notFoundHandler from './middlewares/notFoundHandler.js';
 import errorHandler from './middlewares/errorHandler.js';
 
 const app = express();
 
-const PORT = env('PORT');
+const PORT = env('PORT', 3000);
 
 app.use('/contacts', contactRoutes);
 
@@ -19,7 +20,7 @@ app.use(notFoundHandler);
 app.use(errorHandler);
 
 
-export function setupServer () {
+async function setupServer () {
   app.use(corsMiddleware);
   
   app.use(loggerMiddleware);
@@ -33,3 +34,4 @@ export function setupServer () {
   });
 };
 
+export default setupServer;

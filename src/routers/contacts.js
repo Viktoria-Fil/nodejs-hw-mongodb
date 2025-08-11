@@ -1,5 +1,5 @@
 import express from 'express';
-import { cWrap } from '../utils/ctrlWrapper.js';
+import  cWrap  from '../utils/ctrlWrapper.js';
 const contactRoutes = express.Router();
 const jsonParser = express.json();
 

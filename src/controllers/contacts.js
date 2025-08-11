@@ -12,23 +12,23 @@ export async function getAllContactsConroller(req, res) {
   if (contacts === null) {
     throw new createHttpError.NotFound('Contact not found.');
   }
-  res.status(200).json({
+  res.json({
     status: 200,
     message: 'Successfully found contacts!',
     data: contacts,
   });
 }
 
-export async function getContactByIdController(req, res) {
+export async function getContactByIdController(req, res, next) {
   const id = req.params.contactId;
 
   const contacts = await getContactById(id);
-  if (contacts === null) {
+  if (!contacts) {
     throw new createHttpError.NotFound('Contact not found.');
   }
   res.json({
     status: 200,
-    message: 'Successfully found contacts!',
+    message: 'Successfully found contact!',
     data: contacts,
   });
 }
@@ -42,11 +42,12 @@ export async function postContactController(req, res) {
   });
 }
 
-export async function updateContactController(req, res) {
+export async function updateContactController(req, res, next) {
   const contact = await updateContact(req.params.contactId, req.body);
 
-  if (contact === null) {
-    throw new createHttpError.NotFound('Contact not found.');
+  if (!contact) {
+    next(createHttpError.NotFound('Contact not found.'));
+    return;
   }
   res.json({
     status: 200,
@@ -55,10 +56,10 @@ export async function updateContactController(req, res) {
   });
 }
 
-export async function deleteContactController(req, res) {
+export async function deleteContactController(req, res, next) {
   const contact = await deleteContact(req.params.contactId);
-  if (contact === null) {
-    throw new createHttpError.NotFound('Contact not found.');
+  if (!contact) {
+    next (createHttpError(404, 'Contact not found.'));
   }
   res.status(204).end();
 }

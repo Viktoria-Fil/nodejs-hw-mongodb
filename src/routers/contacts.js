@@ -1,6 +1,7 @@
 import express from 'express';
-import  cWrap  from '../utils/ctrlWrapper.js';
-const contactRoutes = express.Router();
+import ctrlWrapper from '../utils/ctrlWrapper.js';
+
+const contactRouter = express.Router();
 const jsonParser = express.json();
 
 
@@ -13,12 +14,12 @@ import {
 } from '../controllers/contacts.js';
 
 
-contactRoutes.get('/contacts', cWrap(getAllContactsConroller));
-contactRoutes.post('/contacts', jsonParser, cWrap(postContactController));
-contactRoutes.get('/contacts/:contactId', cWrap(getContactByIdController));
-contactRoutes.delete('/contacts/:contactId', cWrap(deleteContactController));
-contactRoutes.patch(
-  '/contacts/:contactId',  jsonParser, cWrap(updateContactController),);
 
-export default contactRoutes;
+contactRouter.get('/', ctrlWrapper(getAllContactsConroller));
+contactRouter.post('/', jsonParser, ctrlWrapper(postContactController));
+contactRouter.get('/:contactId', ctrlWrapper(getContactByIdController));
+contactRouter.delete('/:contactId', ctrlWrapper(deleteContactController));
+contactRouter.patch('/:contactId',  jsonParser, ctrlWrapper(updateContactController));
+
+export default contactRouter;
 

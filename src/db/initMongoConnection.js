@@ -1,20 +1,28 @@
 import mongoose from 'mongoose';
-
+import dotenv from 'dotenv';
+dotenv.config();
 import { env } from '../utils/env.js';
 
 async function initMongoConnection() {
-  const user = env('MONGODB_USER');
-  const pwd = env('MONGODB_PASSWORD');
-  const url = env('MONGODB_URL');
-  const db = env('MONGODB_DB');
+   try {
+   const user = env('MONGODB_USER');
+   const pwd = env('MONGODB_PASSWORD');
+   const url = env('MONGODB_URL');
+   const db = env('MONGODB_DB');
 
-  return await mongoose.connect(
-    `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
-  );
-}
+   await mongoose.connect(
+      `mongodb+srv://${user}:${pwd}@${url}/${db}?retryWrites=true&w=majority`,
+    );
+    console.log('Mongo connection successfully established!');
+  } catch (error) {
+    console.log(error);
+    throw error;
+  };
+};
 
 export { initMongoConnection };
-
+  
+console.log('Mongo URI:', process.env.MONGO_URL); 
  
 //   const cluster = env('MONGODB_CLUSTER_NAME');
 

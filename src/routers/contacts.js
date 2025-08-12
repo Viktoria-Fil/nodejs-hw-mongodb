@@ -4,6 +4,10 @@ import ctrlWrapper from '../utils/ctrlWrapper.js';
 const contactRouter = express.Router();
 const jsonParser = express.json();
 
+import { validateBody } from '../middlewares/validateBody.js';
+import { contactSchema } from '../validation/contacts.js';
+import { isValidId } from '../middlewares/isValidId.js';
+
 
 import {
   deleteContactController,
@@ -16,10 +20,21 @@ import {
 
 
 contactRouter.get('/', ctrlWrapper(getAllContactsConroller));
-contactRouter.post('/', jsonParser, ctrlWrapper(postContactController));
-contactRouter.get('/:contactId', ctrlWrapper(getContactByIdController));
-contactRouter.delete('/:contactId', ctrlWrapper(deleteContactController));
-contactRouter.patch('/:contactId',  jsonParser, ctrlWrapper(updateContactController));
+
+contactRouter.post('/', validateBody(contactSchema),
+  jsonParser,
+  ctrlWrapper(postContactController));
+
+contactRouter.get('/:contactId', isValidId,
+  ctrlWrapper(getContactByIdController));
+
+contactRouter.delete('/:contactId', isValidId,
+  ctrlWrapper(deleteContactController));
+
+contactRouter.patch('/:contactId', isValidId,
+  validateBody(contactSchema),
+  jsonParser,
+  ctrlWrapper(updateContactController));
 
 export default contactRouter;
 

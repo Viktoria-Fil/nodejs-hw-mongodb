@@ -36,21 +36,21 @@ export const getAllContacts = async (
 };
 
 
-export const getContactById = async (id) => {
-  const contacts = await ContactsCollection.findById(id);
+export const getContactById = async ({ id, ownerId }) => {
+  const contacts = await ContactsCollection.findOne({ _id: id, userId: ownerId });
   return contacts;
 };
 
-export const postContact = async (payload) => {
-  const contacts = await ContactsCollection.create(payload);
-  return contacts;
+export const postContact = async ({ payload, ownerId }) => {
+  return ContactsCollection.create({ ...payload, userId: ownerId });
 };
 
-export const updateContact = async (id, payload) => {
-  return ContactsCollection.findByIdAndUpdate(id, payload, { new: true });
+export const updateContact = async ({ id, payload, ownerId }) => {
+  return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId}, payload, {
+    new: true,
+  });
 };
 
-export const deleteContact = async (id) => {
-  const contacts = await ContactsCollection.findByIdAndDelete(id);
-  return contacts;
+export const deleteContact = async ({ id, ownerId }) => {
+  return ContactsCollection.findOneAndDelete({ _id: id, userId: ownerId });
 };

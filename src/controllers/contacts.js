@@ -23,6 +23,7 @@ export async function getAllContactsConroller(req, res) {
     sortBy,
     sortOrder,
     filter,
+    req.user.id,
   );
   if (contacts === null) {
     throw new createHttpError.NotFound('Contact not found.');
@@ -58,7 +59,7 @@ export async function postContactController(req, res) {
 }
 
 export async function updateContactController(req, res, next) {
-  const contact = await updateContact(req.params.contactId, req.body);
+  const contact = await updateContact({id:req.params.contactId, payload: req.body, ownerId: req.user.id});
 
   if (!contact) {
     next(createHttpError.NotFound('Contact not found.'));
@@ -72,7 +73,7 @@ export async function updateContactController(req, res, next) {
 }
 
 export async function deleteContactController(req, res, next) {
-  const contact = await deleteContact(req.params.contactId);
+  const contact = await deleteContact({ id: req.params.contactId, ownerId: req.user.id });
   if (!contact) {
     next (createHttpError(404, 'Contact not found.'));
   }

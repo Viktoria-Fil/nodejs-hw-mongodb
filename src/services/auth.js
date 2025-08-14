@@ -66,4 +66,4 @@ export async function refreshSession(sessionId, refreshToken) {
     accessTokenValidUntil: dataExpiredForToken,
     refreshTokenValidUntil: dataExpiredForRefresh,
   });
-}
+};

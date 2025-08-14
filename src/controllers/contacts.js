@@ -35,22 +35,25 @@ export async function getAllContactsConroller(req, res) {
   });
 }
 
-export async function getContactByIdController(req, res, next) {
+export async function getContactByIdController(req, res) {
   const id = req.params.contactId;
 
-  const contacts = await getContactById(id);
+  const contacts = await getContactById({ id, ownerId: req.user.id });
   if (!contacts) {
     throw new createHttpError.NotFound('Contact not found.');
   }
   res.json({
     status: 200,
-    message: 'Successfully found contact!',
+    message: 'Successfully found contacts!',
     data: contacts,
   });
 }
 
 export async function postContactController(req, res) {
-  const contact = await postContact(req.body);
+  const contact = await postContact({
+    payload: req.body,
+    ownerId: req.user.id,
+  });
   res.status(201).json({
     status: 201,
     message: 'Successfully created a contact!',

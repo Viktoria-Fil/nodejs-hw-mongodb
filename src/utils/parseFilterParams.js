@@ -1,5 +1,5 @@
 function parseType(value) {
-  if (value == 'undefind') {
+  if (value == 'undefined') {
     return undefined;
   }
   const keys = ['home', 'work', 'personal'];
@@ -11,7 +11,7 @@ function parseType(value) {
 }
 
 function parseFavourite(value) {
-  if (value == 'undefind') {
+  if (value == 'undefined') {
     return undefined;
   }
   return value === 'true';

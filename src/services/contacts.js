@@ -5,8 +5,9 @@ export const getAllContacts = async (
   perPage,
   sortBy,
   sortOrder,
-  filter) => {
-  const contactQuery = ContactsCollection.find();
+  filter,
+ownerId) => {
+  const contactQuery = ContactsCollection.find({ userId: ownerId });
   if (typeof filter.type != 'undefined') {
     contactQuery.where('contactType').equals(filter.type);
   }
@@ -17,7 +18,7 @@ export const getAllContacts = async (
 
   const [totalItems, contacts] = await Promise.all([
     ContactsCollection.countDocuments(contactQuery),
-    ContactsCollection.find()
+    ContactsCollection.find({ userId: ownerId })
       .merge(contactQuery)
       .sort({ [sortBy]: sortOrder })
       .skip(skip)

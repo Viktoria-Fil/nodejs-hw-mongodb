@@ -7,6 +7,7 @@ export const contactSchema = Joi.object({
   contactType: Joi.string().valid('work', 'home', 'personal').min(3).max(20).required(),
   isFavourite: Joi.boolean(),
   onDuty: Joi.boolean(),
+  photo: Joi.string(),
 });
 
 export const updatecontactSchema = Joi.object({
@@ -16,6 +17,7 @@ export const updatecontactSchema = Joi.object({
   isFavourite: Joi.boolean(),
   contactType: Joi.string().valid('work', 'home', 'personal').min(3).max(20),
   onDuty: Joi.boolean(),
+  photo: Joi.string(),
 });
 
 // PATCH updatecontactSchema: no required fields

@@ -5,8 +5,8 @@ export const getAllContacts = async (
   perPage,
   sortBy,
   sortOrder,
-  filter) => {
-  const contactQuery = ContactsCollection.find();
+  filter, ownerId) => {
+  const contactQuery = ContactsCollection.find({ userId: ownerId });
   if (typeof filter.type != 'undefined') {
     contactQuery.where('contactType').equals(filter.type);
   }
@@ -17,7 +17,7 @@ export const getAllContacts = async (
 
   const [totalItems, contacts] = await Promise.all([
     ContactsCollection.countDocuments(contactQuery),
-    ContactsCollection.find()
+    ContactsCollection.find({ userId: ownerId })
       .merge(contactQuery)
       .sort({ [sortBy]: sortOrder })
       .skip(skip)
@@ -41,12 +41,12 @@ export const getContactById = async ({ id, ownerId }) => {
   return contacts;
 };
 
-export const postContact = async ({ payload, ownerId }) => {
-  return ContactsCollection.create({ ...payload, userId: ownerId });
+export const postContact = async ({ payload, ownerId, photo }) => {
+  return ContactsCollection.create({ ...payload, userId: ownerId, photo });
 };
 
-export const updateContact = async ({ id, payload, ownerId }) => {
-  return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId}, payload, {
+export const updateContact = async ({ id, payload, ownerId, photo }) => {
+  return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId, photo}, payload, {
     new: true,
   });
 };

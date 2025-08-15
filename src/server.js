@@ -15,10 +15,15 @@ import { auth } from './middlewares/auth.js';
 import { notFoundHandler } from './middlewares/notFoundHandler.js';
 import { errorHandler } from './middlewares/errorHandler.js';
 
+import swaggerUI from 'swagger-ui-express';
+import fs from 'fs';
 
 
 const PORT = Number(env('PORT', '3000'));
 
+const SWAGGER_DOCUMENT = JSON.parse(
+  fs.readFileSync(path.join('docs', 'swagger.json'), 'utf-8'),
+);
 
 async function setupServer () {
   const app = express();
@@ -26,6 +31,7 @@ async function setupServer () {
   app.use(express.json());
   app.use(cors());
   
+  app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(SWAGGER_DOCUMENT));
 
   app.use('/avatars', express.static(path.resolve('src', 'uploads', 'avatars')));
   app.use(cookieParser());

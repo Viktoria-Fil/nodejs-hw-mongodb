@@ -20,7 +20,6 @@ const dataExpiredForToken = new Date(Date.now() + 15 * 60 * 1000);
 const dataExpiredForRefresh = new Date(Date.now() + 30 * 24 * 60 * 60 * 1000);
 
 
-
 export async function registerUser(payload) {
   const user = await UsersCollection.findOne({ email: payload.email });
   if (user !== null) {
@@ -132,3 +131,26 @@ export async function resetPassword(password, token) {
     throw error;
   }
 };
+
+export async function loginOrRegister(email, name) {
+  let user = await UsersCollection.findOne({ email });
+
+  if (user === null) {
+    const password = await bcrypt.hash(
+      crypto.randomBytes(30).toString('base64'),
+      10,
+    );
+
+    user = await UsersCollection.create({ name, email, password });
+  }
+
+  await SessionCollection.deleteOne({ userId: user._id });
+
+  return SessionCollection.create({
+    userId: user._id,
+    accessToken: crypto.randomBytes(30).toString('base64'),
+    refreshToken: crypto.randomBytes(30).toString('base64'),
+    accessTokenValidUntil: new Date(Date.now() + 10 * 60 * 1000),
+    refreshTokenValidUntil: new Date(Date.now() + 24 * 60 * 60 * 1000),
+  });
+}

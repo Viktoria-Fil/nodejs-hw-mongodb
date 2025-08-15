@@ -1,6 +1,6 @@
 import express from 'express';
 import { validateBody } from '../middlewares/validateBody.js';
-import { loginSchema, registerUserSchema, sendResetEmailSchema, resetPasswordSchema } from '../validation/auth.js';
+import { confirmOAuthSchema, loginSchema, registerUserSchema, sendResetEmailSchema, resetPasswordSchema } from '../validation/auth.js';
 
 import ctrlWrapper from '../utils/ctrlWrapper.js';
 
@@ -10,7 +10,9 @@ import {
   logoutController,
   refreshController,
   sendResetEmailController,
-  resetPasswordController
+  resetPasswordController,
+  getOAuthController,
+  confirmOAuthController,
 } from '../controllers/auth.js';
 
 const authRouter = express.Router();
@@ -45,5 +47,14 @@ authRouter.post(
 
 authRouter.post('/refresh', ctrlWrapper(refreshController));
 authRouter.post('/logout', ctrlWrapper(logoutController));
+
+authRouter.get('/get-oauth-url', ctrlWrapper(getOAuthController));
+
+authRouter.post(
+  '/confirm-oauth',
+  jsonParser,
+  validateBody(confirmOAuthSchema),
+  ctrlWrapper(confirmOAuthController),
+);
 
 export default authRouter;

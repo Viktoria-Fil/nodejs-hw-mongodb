@@ -19,19 +19,19 @@ import { uploadToCloudinary } from '../utils/uploadToCloudinary.js';
 
 
 export async function getAllContactsConroller(req, res) {
-   const query = req.query;
+  const query = req.query;
   const { page, perPage } = parsePaginationParams(query);
   const { sortBy, sortOrder } = parseSortParams(query);
   const filter = parseFilterParams(query);
 
-  const contacts = await getAllContacts(
+  const contacts = await getAllContacts({
     page,
     perPage,
     sortBy,
     sortOrder,
     filter,
-    req.user.id,
-  );
+    ownerId: req.user.id,
+  });
   if (contacts === null) {
     throw new createHttpError.NotFound('Contact not found.');
   }

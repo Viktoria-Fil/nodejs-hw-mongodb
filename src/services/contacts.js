@@ -1,11 +1,12 @@
 import { ContactsCollection } from '../models/contact.js';
 
-export const getAllContacts = async (
+export const getAllContacts = async ({
   page,
   perPage,
   sortBy,
   sortOrder,
-  filter, ownerId) => {
+  filter,
+  ownerId,}) => {
   const contactQuery = ContactsCollection.find({ userId: ownerId });
   if (typeof filter.type != 'undefined') {
     contactQuery.where('contactType').equals(filter.type);

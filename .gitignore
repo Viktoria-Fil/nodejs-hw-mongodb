@@ -3,6 +3,7 @@
 .env
 .env.local
 
+tmp/
 
 .vscode
 .DS_Store

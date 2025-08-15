@@ -28,7 +28,7 @@ export async function registerUser(payload) {
   }
   payload.password = await bcrypt.hash(payload.password, 10);
   return UsersCollection.create(payload);
-}
+};
 //-------------------------------
 export async function loginUser(email, password) {
   const user = await UsersCollection.findOne({ email });
@@ -51,11 +51,11 @@ export async function loginUser(email, password) {
     accessTokenValidUntil: dataExpiredForToken,
     refreshTokenValidUntil: dataExpiredForRefresh,
   });
-}
+};
 //-------------------------------
 export async function logoutUser(sessionId, refreshToken) {
   await SessionCollection.deleteOne({ _id: sessionId, refreshToken });
-}
+};
 //-------------------------------
 export async function refreshSession(sessionId, refreshToken) {
   const session = await SessionCollection.findOne({ _id: sessionId });
@@ -78,7 +78,7 @@ export async function refreshSession(sessionId, refreshToken) {
     accessTokenValidUntil: dataExpiredForToken,
     refreshTokenValidUntil: dataExpiredForRefresh,
   });
-}
+};
 //-------------------------------
 export async function sendResetEmail(email) {
   const user = await UsersCollection.findOne({ email });
@@ -105,7 +105,7 @@ export async function sendResetEmail(email) {
       link: `${env('APP_DOMAIN')}reset-password/?token=${token}`,
     }),
   );
-}
+};
 //-------------------------------
 export async function resetPassword(password, token) {
   try {
@@ -131,4 +131,4 @@ export async function resetPassword(password, token) {
 
     throw error;
   }
-}
+};

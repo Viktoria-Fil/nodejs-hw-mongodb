@@ -15,7 +15,6 @@ requestBody:
             type: string
             format: email
             description: User email
-            example: john@example.com
 responses:
   '200':
     description: Reset email sent successfully

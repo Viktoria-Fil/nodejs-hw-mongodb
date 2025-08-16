@@ -15,11 +15,9 @@ requestBody:
           password:
             type: string
             description: New password
-            example: newpassword123
           token:
             type: string
             description: Reset token
-            example: reset_token_here
 responses:
   '200':
     description: Password reset successfully

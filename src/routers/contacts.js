@@ -7,7 +7,7 @@ const jsonParser = express.json();
 import { validateBody } from '../middlewares/validateBody.js';
 import { contactSchema } from '../validation/contacts.js';
 import { isValidId } from '../middlewares/isValidId.js';
-import { updatecontactSchema } from '../validation/contacts.js';
+import { updateContactSchema } from '../validation/contacts.js';
 import { upload } from '../middlewares/upload.js';
 
 import {
@@ -38,7 +38,7 @@ contactRouter.patch('/:contactId',
   upload.single('photo'),
   isValidId,
   jsonParser,
-  validateBody(updatecontactSchema),
+  validateBody(updateContactSchema),
   ctrlWrapper(updateContactController));
 
 export default contactRouter;

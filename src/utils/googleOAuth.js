@@ -1,4 +1,5 @@
 import { OAuth2Client } from 'google-auth-library';
+//import createHttpError from 'http-errors';
 
 import { env } from './env.js';
 
@@ -19,6 +20,7 @@ export function getOAuthURL() {
 
 export async function validateCode(code) {
   const response = await googleOAuthClient.getToken(code);
+ // if (!response.tokens.id_token) throw createHttpError(401, 'Unauthorized');
 
   const ticket = await googleOAuthClient.verifyIdToken({
     idToken: response.tokens.id_token,

@@ -18,16 +18,13 @@ requestBody:
             description: User name
             minLength: 3
             maxLength: 30
-            example: John Doe
           email:
             type: string
             format: email
             description: User email
-            example: john@example.com
           password:
             type: string
             description: User password
-            example: password123
 responses:
   '201':
     description: User registered successfully

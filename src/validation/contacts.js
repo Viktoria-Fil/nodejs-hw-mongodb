@@ -10,7 +10,7 @@ export const contactSchema = Joi.object({
   photo: Joi.string(),
 });
 
-export const updatecontactSchema = Joi.object({
+export const updateContactSchema = Joi.object({
   name: Joi.string().min(3).max(20),
   phoneNumber: Joi.string().min(3).max(20),
   email: Joi.string().min(3).max(20),

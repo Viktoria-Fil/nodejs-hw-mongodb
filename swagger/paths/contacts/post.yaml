@@ -20,35 +20,29 @@ requestBody:
             description: Contact name
             minLength: 3
             maxLength: 20
-            example: John Doe
           phoneNumber:
             type: string
             description: Contact phone number
             minLength: 3
             maxLength: 20
-            example: +380991234567
           email:
             type: string
             description: Contact email
             minLength: 3
             maxLength: 20
-            example: john@example.com
           isFavourite:
             type: boolean
             description: Is contact favourite
-            example: false
             default: false
           contactType:
             type: string
             description: Contact type
             enum: [work, home, personal]
-            example: personal
-            default: personal
           photo:
             type: string
             format: binary
             description: Contact photo
-
+            required: false
 responses:
   '201':
     description: Contact created successfully

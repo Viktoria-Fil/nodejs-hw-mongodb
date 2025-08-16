@@ -32,7 +32,7 @@ export async function registerUser(payload) {
 export async function loginUser(email, password) {
   const user = await UsersCollection.findOne({ email });
 
-  if (user === null) {
+  if (!user) {
     throw new createHttpError.Unauthorized('Email or password is incorrect');
   }
   const isMatch = await bcrypt.compare(password, user.password);
@@ -135,7 +135,7 @@ export async function resetPassword(password, token) {
 export async function loginOrRegister(email, name) {
   let user = await UsersCollection.findOne({ email });
 
-  if (user === null) {
+  if (!user) {
     const password = await bcrypt.hash(
       crypto.randomBytes(30).toString('base64'),
       10,

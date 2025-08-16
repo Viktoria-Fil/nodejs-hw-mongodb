@@ -11,7 +11,6 @@ parameters:
     required: true
     schema:
       type: string
-      example: 507f1f77bcf86cd799439011
     description: Contact ID
 requestBody:
   content:
@@ -24,32 +23,32 @@ requestBody:
             description: Contact name
             minLength: 3
             maxLength: 20
-            example: John Doe
           phoneNumber:
             type: string
             description: Contact phone number
             minLength: 3
             maxLength: 20
-            example: +380991234567
+            required: false
           email:
             type: string
             description: Contact email
             minLength: 3
             maxLength: 20
-            example: john@example.com
+            required: false
           isFavourite:
             type: boolean
             description: Is contact favourite
             example: false
+            required: false
           contactType:
             type: string
             description: Contact type
             enum: [work, home, personal]
-            example: personal
           photo:
             type: string
             format: binary
             description: Contact photo
+            required: false
 responses:
   '200':
     description: Contact updated successfully

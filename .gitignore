@@ -2,9 +2,15 @@
 
 .env
 .env.local
+.env.*.local
 
-tmp/
+/src/tmp/*
+!/src/tmp/.gitkeep
+/src/uploads/avatars/*
+!/src/uploads/avatars/.gitkeep
 
 .vscode
 .DS_Store
 .idea
+
+.cache/

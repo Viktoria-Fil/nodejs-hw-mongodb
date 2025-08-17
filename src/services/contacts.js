@@ -47,7 +47,7 @@ export const postContact = async ({ payload, ownerId, photo }) => {
 };
 
 export const updateContact = async ({ id, payload, ownerId, photo }) => {
-   return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId }, payload, {
+   return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId }, { $set: payload }, {
     new: true,
   });
 };

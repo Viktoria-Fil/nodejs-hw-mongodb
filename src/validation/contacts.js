@@ -11,13 +11,14 @@ export const contactSchema = Joi.object({
 });
 
 export const updateContactSchema = Joi.object({
-  name: Joi.string().min(3).max(20),
-  phoneNumber: Joi.string().min(3).max(20),
-  email: Joi.string().min(3).max(20),
-  isFavourite: Joi.boolean(),
-  contactType: Joi.string().valid('work', 'home', 'personal').min(3).max(20),
-  onDuty: Joi.boolean(),
-  photo: Joi.string().optional(),
+  name: Joi.string().min(3).max(20).optional().allow(''),
+  phoneNumber: Joi.string().min(3).max(20).optional().allow(''),
+  email: Joi.string().min(3).max(20).optional().allow(''),
+  isFavourite: Joi.boolean().optional(),
+  contactType: Joi.string().valid('work', 'home', 'personal').optional().allow(''),
+  onDuty: Joi.boolean().optional(),
+  photo: Joi.string().optional().allow(''),
 });
+
 
 // PATCH updatecontactSchema: no required fields

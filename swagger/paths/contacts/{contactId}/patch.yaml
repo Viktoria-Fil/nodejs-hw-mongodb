@@ -28,18 +28,15 @@ requestBody:
             description: Contact phone number
             minLength: 3
             maxLength: 20
-            required: false
           email:
             type: string
             description: Contact email
             minLength: 3
             maxLength: 20
-            required: false
           isFavourite:
             type: boolean
             description: Is contact favourite
             example: false
-            required: false
           contactType:
             type: string
             description: Contact type
@@ -48,7 +45,6 @@ requestBody:
             type: string
             format: binary
             description: Contact photo
-            required: false
 responses:
   '200':
     description: Contact updated successfully

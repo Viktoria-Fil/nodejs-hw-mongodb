@@ -90,6 +90,7 @@ export async function postContactController(req, res) {
 export async function updateContactController(req, res, next) {
   let photo = null;
 
+  
  try {
     if (req.file && req.file.path) {
       if (env('UPLOAD_TO_CLOUDINARY') === 'true') {
@@ -105,9 +106,17 @@ export async function updateContactController(req, res, next) {
         photo = `${env('APP_DOMAIN')}avatars/${req.file.filename}`;
       }
     }
+
     if (photo) {
       req.body.photo = photo;
     }
+   
+    Object.keys(req.body).forEach(key => {
+      if (req.body[key] === '') {
+        delete req.body[key];
+      }
+    });
+   
     const contact = await updateContact({
       id: req.params.contactId,
       payload: req.body,

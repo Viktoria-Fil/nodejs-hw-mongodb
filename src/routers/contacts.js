@@ -37,7 +37,6 @@ contactRouter.delete('/:contactId', isValidId,
 contactRouter.patch('/:contactId',
   upload.single('photo'),
   isValidId,
-  jsonParser,
   validateBody(updateContactSchema),
   ctrlWrapper(updateContactController));
 

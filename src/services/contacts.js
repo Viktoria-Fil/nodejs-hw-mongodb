@@ -3,7 +3,7 @@ import { ContactsCollection } from '../models/contact.js';
 export const getAllContacts = async ({
   page,
   perPage,
-  sortBy,
+  sortBy = '_id',
   sortOrder,
   filter,
   ownerId,}) => {
@@ -47,7 +47,7 @@ export const postContact = async ({ payload, ownerId, photo }) => {
 };
 
 export const updateContact = async ({ id, payload, ownerId, photo }) => {
-  return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId, photo}, payload, {
+   return ContactsCollection.findOneAndUpdate({ _id: id, userId: ownerId }, payload, {
     new: true,
   });
 };

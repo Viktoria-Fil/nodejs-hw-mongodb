@@ -14,7 +14,7 @@ tags:
 servers:
   - url: http://localhost:3000
     description: Local development server
-  - url: http://nodejs-hw-mongodb-6hw-bqor.onrender.com
+  - url: https://nodejs-hw-mongodb-6hw-bqor.onrender.com
     description: Production server
 paths:
   /contacts:

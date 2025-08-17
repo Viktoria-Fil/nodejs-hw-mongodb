@@ -89,37 +89,41 @@ export async function postContactController(req, res) {
 
 export async function updateContactController(req, res, next) {
   let photo = null;
+  try {
+    if (req.file && req.file.path) {
+      if (env('UPLOAD_TO_CLOUDINARY') === 'true') {
+        const result = await uploadToCloudinary(req.file.path);
+        await fs.unlink(req.file.path);
 
-  if (req.file.path !== undefined) {
-    if (env('UPLOAD_TO_CLOUDINARY') === 'true') {
-      const result = await uploadToCloudinary(req.file.path);
-      await fs.unlink(req.file.path);
+        photo = result.secure_url;
+      } else {
+        const newPath = path.resolve('src', 'uploads', 'avatars', req.file.filename);
+        await fs.rename(
+          req.file.path, newPath);
 
-      photo = result.secure_url;
-    } else {
-      await fs.rename(
-        req.file.path,
-        path.resolve('src', 'uploads', 'avatars', req.file.filename),
-      );
-
-      photo = `${env('APP_DOMAIN')}avatars/${req.file.filename}`;
+        photo = `${env('APP_DOMAIN')}avatars/${req.file.filename}`;
+      }
     }
-  }
-  const contact = await updateContact({
-    id: req.params.contactId,
-    payload: req.body,
-    ownerId: req.user.id,
-    photo,
-  });
+    if (photo) {
+      req.body.photo = photo;
+    }
+    const contact = await updateContact({
+      id: req.params.contactId,
+      payload: req.body,
+      ownerId: req.user.id,
+    });
 
-  if (contact === null) {
-    throw new createHttpError.NotFound('Contact not found.');
+    if (!contact) {
+      next(createHttpError.NotFound('Contact not found.'));
+    }
+    res.json({
+      status: 200,
+      message: 'Successfully patched a contact!',
+      data: contact,
+    });
+  } catch (err) {
+    next(err);
   }
-  res.json({
-    status: 200,
-    message: 'Successfully patched a contact!',
-    data: contact,
-  });
 }
 
 export async function deleteContactController(req, res, next) {
